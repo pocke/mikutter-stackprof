@@ -1,4 +1,5 @@
 require 'stackprof'
+require 'stringio'
 
 Thread.new do
   loop do
@@ -6,7 +7,8 @@ Thread.new do
       sleep 60
     end
     re = StackProf::Report.new(r)
-    pp Time.now
-    re.print_text
+    sio = StringIO.new("", "w+")
+    re.print_text(false, 10, sio)
+    Plugin.call(:update, nil, [Message.new(message: sio.string, system: true)])
   end
 end
