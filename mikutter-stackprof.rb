@@ -4,7 +4,7 @@ require 'stringio'
 Thread.new do
   loop do
     r = StackProf.run mode: :cpu do
-      sleep 60
+      sleep 60 * 60
     end
     re = StackProf::Report.new(r)
     sio = StringIO.new("", "w+")
